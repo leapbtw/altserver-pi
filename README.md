@@ -4,23 +4,24 @@ AltServer docker container for raspberry pi 4
 ## Steps
 0. **Install `docker` and `docker-compose`**
     - Install [`docker`](https://get.docker.com) and [`docker-compose`](https://docs.docker.com/compose/install/linux/#install-the-plugin-manually)
-1. **Clone the Repository**
+1. **Clone the repo on the raspberry**
     ```bash
     git clone https://github.com/leapbtw/altserver-pi.git && cd altserver-pi
     ```
 
-2. **Install Dependencies**
-    - Install `libimobiledevice` and `usbmuxd`. Package names may vary between distributions, so please check the appropriate package names for your system.
+2. **Install pairing software**
+    - Install `libimobiledevice` and `usbmuxd`.
+    - This software is only needed once for pairing, you can perform these steps on a different machine and copy the files to the raspberry later. Package names may vary between distributions, so please check the appropriate package names for your system.
 
 3. **Pair Your iDevice**
     - Connect your iDevice to your PC and run:
       ```bash
-      idevicepair list
+      idevicepair list # run and check your iDevice, might ask for passcode
       idevicepair pair
       ```
 
 4. **Copy Pairing Files**
-    - Copy the `.plist` files to the root of the cloned repository:
+    - Copy the `.plist` files to the root of the cloned repo on the raspberry:
       ```bash
       cp /var/lib/lockdown/*.plist .
       ```
@@ -29,7 +30,7 @@ AltServer docker container for raspberry pi 4
     - Your folder structure should look something like this:
       ```bash
       $ ls
-      docker-compose.yaml  Dockerfile  provision_config  README.md  startup_script.sh
+      docker-compose.yaml  Dockerfile  provision_config  README.md  startup_script.sh  <uuid>.plist  SystemConfiguration.plist
       ```
 
 6. **Set Permissions**
@@ -67,6 +68,12 @@ Now you should be able to use the altserver application on your Raspberry Pi 4.
 
       [Install]
       WantedBy=multi-user.target
+      ```
+    - Enable and start the service
+      ```bash
+      sudo systemctl daemon-reload
+      sudo systemctl enable altserver.service
+      sudo systemctl start altserver.service
       ```
 
 # Software used in the docker image
