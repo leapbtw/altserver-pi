@@ -1,0 +1,16 @@
+services:
+  # you can build this image yourself if you want to
+  # https://github.com/Dadoum/anisette-v3-server
+  anisette:
+    image: "dadoum/anisette-server:latest"
+    # https://github.com/Dadoum/Provision#Docker-container
+    # probably works without this folder, but we're following instructions
+    volumes:
+      - ${PWD}/provision_config:/home/Chester/.config/Provision/
+    network_mode: "host"
+  
+  altserver:
+    build: .
+    # at the time of writing i can't be bothered fixing port forwarding
+    network_mode: "host"
+    depends_on: ["anisette"]
