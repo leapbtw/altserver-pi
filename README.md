@@ -1,5 +1,5 @@
 # Altserver-Pi
-AltServer docker container for raspberry pi 4
+[AltServer](https://github.com/altstoreio/AltStore) docker container for raspberry pi 4
 
 ## Steps
 0. **Install `docker` and `docker-compose`**
